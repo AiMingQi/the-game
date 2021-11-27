@@ -6,6 +6,6 @@ pages:
     - npm run build
   artifacts:
     paths:
-      - public
+      - .svelte-kit/output
   only:
     - master
