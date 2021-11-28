@@ -27,7 +27,7 @@
         class="mb-5"
         cols="12"
       >
-        <h2 class="headline font-weight-bold mb-3">
+        <h2 class="headline font-weight-bold mb-6">
           How to prepare?
         </h2>
 
@@ -50,7 +50,7 @@
 
 <script>
   export default {
-    name: 'HelloWorld',
+    name: 'WelcomePage',
 
     data: () => ({
       whatsNext: [
