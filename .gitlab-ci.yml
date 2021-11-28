@@ -6,6 +6,6 @@ pages:
     - npm run build
   artifacts:
     paths:
-      - public
+      - build
   only:
     - master
