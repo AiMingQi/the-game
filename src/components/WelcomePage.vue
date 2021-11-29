@@ -27,7 +27,7 @@
         </v-row>
         <v-row justify="center">
           <v-btn @click="getOwnerAddress" v-show="$store.state.ownerAddress == 'nothing'">Login</v-btn>
-          <p v-show="$store.state.ownerAddress !== 'nothing'">Welcome <br> <strong>{{$store.state.ownerAddress}}</strong> <br> You have signing authority for a valid Solana wallet.</p>
+          <p v-show="$store.state.ownerAddress !== 'nothing'">Welcome <br> <strong>{{$store.state.ownerAddress}}</strong> <br> You have signing authority for a valid browser based Solana wallet. <br>You have successfully completed a portion of the-pre-game.</p>
         </v-row>
       </v-col>
 
