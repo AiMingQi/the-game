@@ -46,7 +46,7 @@
             :href="next.href"
             class="subheading mx-3 mb-4 font-weight-white"
             color="#c00000"
-            target="_blank"
+            :target="_blank"
             dark
           >
             {{ next.text }}
@@ -74,14 +74,22 @@
         {
           text: 'Visit Solana',
           href: 'https://solana.com',
+          target: '_blank'
         },
         {
-          text: 'Setup a Wallet',
+          text: 'Setup a Browser-Based Wallet',
           href: 'https://phantom.app/',
+          target: '_blank'
         },
         {
           text: 'Get an NFT to play',
           href: 'https://solsea.io/collection/616eee186c530ec596bb1027',
+          target: '_blank'
+        },
+        {
+          text: 'Read the Rules',
+          href: '/#/rules',
+          target: '_self'
         },
       ]
     }),
