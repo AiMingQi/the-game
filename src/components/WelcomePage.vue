@@ -27,7 +27,7 @@
         </v-row>
         <v-row justify="center">
           <v-btn @click="getOwnerAddress" v-show="$store.state.ownerAddress == 'nothing'">Login</v-btn>
-          <p v-show="$store.state.ownerAddress">Welcome <br> <strong>{{$store.state.ownerAddress}}</strong></p>
+          <p v-show="$store.state.ownerAddress !== 'nothing'">Welcome <br> <strong>{{$store.state.ownerAddress}}</strong> <br> You have signing authority for a valid Solana wallet.</p>
         </v-row>
       </v-col>
 
