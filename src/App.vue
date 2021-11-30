@@ -15,7 +15,6 @@
           width="40"
         />
       </div>
-      <v-spacer></v-spacer>
       <v-btn class="mx-3" to="/">Home</v-btn>
       <v-btn class="mx-3" to="/rules">Rules</v-btn> 
       <v-spacer></v-spacer>
