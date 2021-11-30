@@ -10,17 +10,18 @@
         </h2>
 
         <v-row class="text-left">
-         <v-card v-for="nft in nfts" :key="nft.data.index" class="mx-auto my-12" max-width="374" dark>
-            <v-card-title>{{nft.data.name}}</v-card-title>
+         <v-card v-for="nft in nftmetadata" :key="nft.index" class="mx-auto my-12" max-width="400" dark>
+            <v-card-title>{{nft.nft.data.name}}</v-card-title>
             <v-card-text>
-            <v-img src="../assets/game-baby.png"></v-img>
-                {{nft.data.name}}
-                {{nft.mint}}
-                {{nft.updateAuthority}}
+            <v-img :src="nft.res.data.image"></v-img>
+                {{nft.res.data.name}} <br>
+                Token Address: {{nft.nft.mint}} <br>
+                Contract Address: {{nft.nft.updateAuthority}} <br>
+                <br>
+                Description: {{nft.res.data.description}} <br>
                 </v-card-text>
          </v-card>
         </v-row>
-        <v-btn @click="getAllNftData" dark>Get NFT Data</v-btn>
       </v-col>
   </v-container>
   </div>
@@ -43,13 +44,9 @@
     mounted () {
         console.log(solanaWeb3);
         console.log(this.$store.state.ownerAddress);
-        this.getOwnerAddress();
-      
     },
-    async created (){
-        // const createConnection = () => {
-        //     return new Connection(clusterApiUrl("devnet"));
-        // };
+    created (){
+       this.getAllNftData();
     },
     methods: {
         async getAllNftData () {
