@@ -26,8 +26,8 @@
           <h1 class="mb-3" >♥ + - ?</h1>
         </v-row>
         <v-row justify="center">
-          <v-btn @click="getOwnerAddress" v-show="$store.state.ownerAddress == 'nothing'">Login</v-btn>
-          <p v-show="$store.state.ownerAddress !== 'nothing'">Welcome <br> <strong>{{$store.state.ownerAddress}}</strong> <br> You have signing authority for a valid browser based Solana wallet. <br>You have successfully completed a portion of the-pre-game.</p>
+          <v-btn @click="getOwnerAddress" v-show="$store.state.ownerAddress == 'no current user'">Login</v-btn>
+          <p v-show="$store.state.ownerAddress !== 'no current user'">Welcome <br> <strong>{{$store.state.ownerAddress}}</strong> <br> You have signing authority for a valid browser based Solana wallet. <br>You have successfully completed a portion of the-pre-game.</p>
         </v-row>
       </v-col>
 
@@ -39,6 +39,11 @@
           How to prepare:
         </h2>
 
+        <v-row justify="center" class="mb-6">
+          <v-btn to="/rules" color="#c00000" dark>
+            Read the Rules
+          </v-btn>
+        </v-row>  
         <v-row justify="center">
           <v-btn
             v-for="(next, i) in whatsNext"
@@ -46,11 +51,11 @@
             :href="next.href"
             class="subheading mx-3 mb-4 font-weight-white"
             color="#c00000"
-            :target="_blank"
+            target="_blank"
             dark
           >
             {{ next.text }}
-          </v-btn>
+          </v-btn >
           
         </v-row>
         
@@ -85,12 +90,7 @@
           text: 'Get an NFT to play',
           href: 'https://solsea.io/collection/616eee186c530ec596bb1027',
           target: '_blank'
-        },
-        {
-          text: 'Read the Rules',
-          href: '/#/rules',
-          target: '_self'
-        },
+        }
       ]
     }),
     mounted () {

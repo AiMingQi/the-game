@@ -33,6 +33,13 @@
     <v-main>
       <router-view/>
     </v-main>
+    <v-footer dark>
+      <p>© 2021 the-game.fun </p>
+      <v-spacer></v-spacer>
+      {{$store.state.ownerAddress}}
+      <v-spacer></v-spacer>
+      <p>version: <strong>the-pre-game</strong></p>
+    </v-footer>
   </v-app>
 </template>
 
