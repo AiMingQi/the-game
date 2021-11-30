@@ -16,9 +16,12 @@
         />
       </div>
       <v-spacer></v-spacer>
-      <div justify="center">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/rules">Rules</router-link>
+      <v-btn class="mx-3" to="/">Home</v-btn>
+      <v-btn class="mx-3" to="/rules">Rules</v-btn> 
+      <v-spacer></v-spacer>
+      <div v-show="$store.state.ownerAddress !== 'no current user'">
+      <v-btn class="mx-3" to="/nft-list">My NFTs</v-btn>
+      <v-btn class="mx-3" to="/battle-ground">Battle Ground</v-btn>
       </div>
       <v-spacer></v-spacer>
       <v-btn
@@ -36,12 +39,40 @@
     <v-footer dark>
       <p>© 2021 the-game.fun </p>
       <v-spacer></v-spacer>
-      {{$store.state.ownerAddress}}
+      <v-btn color="#c00000" dark @click="getOwnerAddress" v-show="$store.state.ownerAddress == 'no current user'">Login</v-btn>
+      <p v-show="$store.state.ownerAddress !== 'no current user'">{{$store.state.ownerAddress}}</p>
       <v-spacer></v-spacer>
       <p>version: <strong>the-pre-game</strong></p>
     </v-footer>
   </v-app>
 </template>
+
+<script>
+
+  import * as solanaWeb3 from '@solana/web3.js';
+  export default {
+    data: () => ({
+      ownerAddress: '',
+    }),
+    mounted () {
+      console.log(solanaWeb3);
+      console.log(this.$store.state.ownerAddress);
+    },
+    methods: {
+      async getOwnerAddress(){
+        try {
+          const resp = await window.solana.connect();
+          this.$store.state.ownerAddress = resp.publicKey.toString()
+          console.log(resp.publicKey.toString())
+          // 26qv4GCcx98RihuK3c4T6ozB3J7L6VwCuFVc7Ta2A3Uo 
+        } catch (err) {
+          // { code: 4001, message: 'User rejected the request.' }
+        }
+        // true
+      }
+    }
+  }
+</script>
 
 <style lang="scss">
 #app {
