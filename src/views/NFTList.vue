@@ -8,7 +8,8 @@
         <h2 class="headline font-weight-bold mb-6">
           Your Playable NFTs: Feature Under Construction !!!
         </h2>
-
+        <v-btn color="blue" dark @click="reveal = true" v-show="!reveal">See More</v-btn>  
+        <v-btn color="blue" dark @click="reveal = false" v-show="reveal">See Less</v-btn>  
         <v-row class="text-left">
          <v-card v-for="nft in nftmetadata" :key="nft.index" class="mx-auto my-12" max-width="400" dark>
             <v-card-title>{{nft.nft.data.name}}</v-card-title>
@@ -16,8 +17,6 @@
             <v-img :src="nft.res.data.image"></v-img>
                 </v-card-text>
             <v-card-actions>
-              <v-btn color="blue" dark @click="reveal = true">See More</v-btn>  
-              <v-spacer></v-spacer>  
               <v-btn color="purple" dark >Transfer NFT</v-btn>  
               <v-spacer></v-spacer>  
               <v-btn color="#c00000" dark>Battle</v-btn>    
@@ -36,13 +35,6 @@
                 Description: {{nft.res.data.description}} <br>
               </v-card-text>
               <v-card-actions class="pt-0">
-                <v-btn
-                  text
-                  color="teal accent-4"
-                  @click="reveal = false"
-                >
-                  Close
-                </v-btn>
               </v-card-actions>
             </v-card>
           </v-expand-transition>    
