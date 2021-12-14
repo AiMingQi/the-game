@@ -14,12 +14,38 @@
             <v-card-title>{{nft.nft.data.name}}</v-card-title>
             <v-card-text>
             <v-img :src="nft.res.data.image"></v-img>
-                {{nft.res.data.name}} <br>
+                </v-card-text>
+            <v-card-actions>
+              <v-btn color="blue" dark @click="reveal = true">See More</v-btn>  
+              <v-spacer></v-spacer>  
+              <v-btn color="purple" dark >Transfer NFT</v-btn>  
+              <v-spacer></v-spacer>  
+              <v-btn color="#c00000" dark>Battle</v-btn>    
+            
+            </v-card-actions>
+            <v-expand-transition>
+            <v-card
+              v-if="reveal"
+              class="transition-fast-in-fast-out v-card--reveal"
+              style="height: 100%;"
+            >
+              <v-card-text class="pb-0">
                 Token Address: {{nft.nft.mint}} <br>
                 Contract Address: {{nft.nft.updateAuthority}} <br>
                 <br>
                 Description: {{nft.res.data.description}} <br>
-                </v-card-text>
+              </v-card-text>
+              <v-card-actions class="pt-0">
+                <v-btn
+                  text
+                  color="teal accent-4"
+                  @click="reveal = false"
+                >
+                  Close
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-expand-transition>    
          </v-card>
         </v-row>
       </v-col>
@@ -36,6 +62,7 @@
 
   export default {
     data: () => ({
+      reveal: false,
       ownerAddress: '',
       nfts: {},
       nftmetadata: [],
@@ -51,7 +78,7 @@
     methods: {
         async getAllNftData () {
             try {
-                const connect =    createConnectionConfig(clusterApiUrl("mainnet-beta"));
+                const connect =    createConnectionConfig(clusterApiUrl(this.$store.state.network));
                 let ownerToken = this.$store.state.ownerAddress;
                 const result = isValidSolanaAddress(ownerToken);
                 console.log("result", result);
@@ -60,7 +87,7 @@
                 connection: connect,
                 serialization: true,
                 });
-                console.log('nfts',nfts)
+                // console.log('nfts',nfts)
                 this.nfts = nfts;
                 this.getArweaveMeta();
             } catch (error) {

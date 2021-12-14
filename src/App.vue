@@ -23,6 +23,8 @@
       <v-btn class="mx-3" to="/battle-ground">Battle Ground</v-btn>
       </div>
       <v-spacer></v-spacer>
+      Current: {{this.$store.state.network}}
+      <v-spacer></v-spacer>
       <v-btn
         href="https://www.coinbase.com/join/crumb_8"
         target="_blank"
@@ -38,8 +40,15 @@
     <v-footer dark>
       <p>© 2021 the-game.fun </p>
       <v-spacer></v-spacer>
-      <v-btn color="#c00000" dark @click="getOwnerAddress" v-show="$store.state.ownerAddress == 'no current user'">Login</v-btn>
+      <v-btn color="#c00000" dark @click="getOwnerAddress" v-show="$store.state.ownerAddress == 'no current user'">Connect Wallet</v-btn>
       <p v-show="$store.state.ownerAddress !== 'no current user'">{{$store.state.ownerAddress}}</p>
+      <v-spacer></v-spacer>
+      <v-select
+          :items="this.$store.state.networkChoices"
+          label="Change network"
+          @change="setNetwork"
+          v-model="network"
+        ></v-select>
       <v-spacer></v-spacer>
       <p>version: <strong>the-pre-game</strong></p>
     </v-footer>
@@ -52,6 +61,7 @@
   export default {
     data: () => ({
       ownerAddress: '',
+      network: ''
     }),
     mounted () {
       console.log(solanaWeb3);
@@ -68,6 +78,9 @@
           // { code: 4001, message: 'User rejected the request.' }
         }
         // true
+      },
+      setNetwork () {
+        this.$store.commit('updateNetwork', this.network)
       }
     }
   }

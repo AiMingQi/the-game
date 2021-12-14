@@ -26,7 +26,7 @@
           <h1 class="mb-3" >♥ + - ?</h1>
         </v-row>
         <v-row justify="center">
-          <v-btn @click="getOwnerAddress" v-show="$store.state.ownerAddress == 'no current user'">Login</v-btn>
+          <v-btn @click="getOwnerAddress" v-show="$store.state.ownerAddress == 'no current user'" dark>Connect Wallet</v-btn>
           <p v-show="$store.state.ownerAddress !== 'no current user'">Welcome <br> <strong>{{$store.state.ownerAddress}}</strong> <br> You have signing authority for a valid browser based Solana wallet. <br>You have successfully completed a portion of the-pre-game.</p>
         </v-row>
       </v-col>
