@@ -3,8 +3,11 @@
         <v-row>
             <v-col>
                 <v-card width="100%">
-                    <v-card-title>Transfer Token</v-card-title>
                     <v-card-text>
+                        <h2 v-show="!validTransferAddress">Input Valid Solana Destination Address</h2>
+                    </v-card-text>
+                    <v-card-text>
+                        <h2 class="green--text" v-show="validTransferAddress"><v-icon>mdi-check</v-icon> Valid Address</h2>
                         <v-col cols="12">
                         <v-text-field 
                             v-model="transferDestinationAccount" 
@@ -17,28 +20,30 @@
                         </v-col>
                     </v-card-text>
                     <v-card-actions>
+                        <!-- <v-btn
+                            class="white--text"
+                            color="teal"
+                            @click="overlay = false"
+                            >
+                            Cancel
+                        </v-btn> -->
+                        <v-spacer></v-spacer>
                         <v-btn
-                        class="white--text"
-                        color="teal"
-                        @click="overlay = false"
-                        >
-                        Cancel
+                            class="white--text"
+                            color="purple"
+                            v-show="validTransferAddress"
+                            @click="submitTransaction"
+                            >
+                            Submit
                         </v-btn>
+                    
                         <v-btn
-                        class="white--text"
-                        color="purple"
-                        v-show="validTransferAddress"
-                        @click="submitTransaction"
-                        >
-                        Submit
-                        </v-btn>
-                        <v-btn
-                        class="white--text"
-                        color="red"
-                        @click="checkTransferAddress"
-                        v-show="!validTransferAddress"
-                        >
-                        Check Addr
+                            class="white--text"
+                            color="red"
+                            @click="checkTransferAddress"
+                            v-show="!validTransferAddress"
+                            >
+                            Check Addr
                         </v-btn>
                     </v-card-actions>
                 </v-card>
@@ -127,23 +132,21 @@
             }
         },
         submitTransaction () {
+            this.validTransferAddress = false
           console.log('submitTransaction')
         },
         async checkTransferAddress () {
-          try {
-                const connect =    createConnectionConfig(clusterApiUrl(this.$store.state.network));
+            try {
                 const result = isValidSolanaAddress(this.transferDestinationAccount);
                 console.log("result", result);
-                const nfts = await getParsedNftAccountsByOwner({
-                publicAddress: this.transferDestinationAccount,
-                connection: connect,
-                serialization: true,
-                });
-                // console.log('nfts',nfts)
-                this.nfts = nfts;
-                this.getArweaveMeta();
+                if (result === true) {
+                    this.validTransferAddress = true
+                } else {
+                    this.validTransferAddress = false
+                }
             } catch (error) {
-            console.log(error);
+                this.validTransferAddress = false
+                console.log(error);
             }
           console.log('checkTransferAddress')
         }
