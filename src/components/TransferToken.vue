@@ -1,70 +1,54 @@
 <template>
-  <div class="rules">
     <v-container>
-    <v-col
-        class="mb-5"
-        cols="12"
-      >
-        <h2 class="headline font-weight-bold mb-6">
-          Your Playable NFTs: Feature Under Construction !!!
-        </h2>
-        <v-btn color="blue" dark @click="reveal = true" v-show="!reveal">See More</v-btn>  
-        <v-btn color="blue" dark @click="reveal = false" v-show="reveal">See Less</v-btn>  
-        <v-row class="text-left">
-         <v-card v-for="nft in nftmetadata" :key="nft.index" class="mx-auto my-12" max-width="400" dark>
-            <v-card-title>{{nft.nft.data.name}}</v-card-title>
-            <v-card-text>
-            <v-img :src="nft.res.data.image"></v-img>
-                </v-card-text>
-            <v-card-actions>
-              <v-btn color="purple" dark @click="overlay = !overlay">Transfer NFT</v-btn>  
-              <v-spacer></v-spacer>  
-              <v-btn color="#c00000" dark>Battle</v-btn>    
-            
-            </v-card-actions>
-            <v-expand-transition>
-            <v-card
-              v-if="reveal"
-              class="transition-fast-in-fast-out v-card--reveal"
-              style="height: 100%;"
-            >
-              <v-card-text class="pb-0">
-                Token Address: {{nft.nft.mint}} <br>
-                Contract Address: {{nft.nft.updateAuthority}} <br>
-                <br>
-                Description: {{nft.res.data.description}} <br>
-              </v-card-text>
-              <v-card-actions class="pt-0">
-              </v-card-actions>
-            </v-card>
-          </v-expand-transition>    
-         </v-card>
-         <v-overlay
-          :z-index="zIndex"
-          :value="overlay"
-            >
-            <v-card width="100%">
-              <v-card-title>Transfer Token</v-card-title>
-              <v-card-text>
-                  <transfer-token></transfer-token>
-              </v-card-text>
-              <v-card-actions>
-                <v-btn
-                  class="white--text"
-                  color="teal"
-                  @click="overlay = false"
-                >
-                  Cancel
-                </v-btn>
-              </v-card-actions>
-            </v-card>
-          
-        </v-overlay>
+        <v-row>
+            <v-col>
+                <v-card width="100%">
+                    <v-card-title>Transfer Token</v-card-title>
+                    <v-card-text>
+                        <v-col cols="12">
+                        <v-text-field 
+                            v-model="transferDestinationAccount" 
+                            :rules="[rules.required, rules.counter]"
+                            width="100%"
+                            auto-grow
+                            rows="2"
+                            row-height="20"
+                            ></v-text-field>
+                        </v-col>
+                    </v-card-text>
+                    <v-card-actions>
+                        <v-btn
+                        class="white--text"
+                        color="teal"
+                        @click="overlay = false"
+                        >
+                        Cancel
+                        </v-btn>
+                        <v-btn
+                        class="white--text"
+                        color="purple"
+                        v-show="validTransferAddress"
+                        @click="submitTransaction"
+                        >
+                        Submit
+                        </v-btn>
+                        <v-btn
+                        class="white--text"
+                        color="red"
+                        @click="checkTransferAddress"
+                        v-show="!validTransferAddress"
+                        >
+                        Check Addr
+                        </v-btn>
+                    </v-card-actions>
+                </v-card>
+            </v-col>
         </v-row>
-      </v-col>
-  </v-container>
-  </div>
-</template>
+    </v-container>      
+        
+     
+</template>   
+
 
 <script>
 
@@ -72,12 +56,8 @@
 //   import { Connection, clusterApiUrl, LAMPORTS_PER_SOL } from "@solana/web3.js";
   import { getParsedNftAccountsByOwner,isValidSolanaAddress, createConnectionConfig,} from "@nfteyez/sol-rayz";
   import axios from "axios";
-  import TransferToken from '../components/TransferToken.vue';
 
   export default {
-    components: {
-    TransferToken
-    },
     data: () => ({
       validTransferAddress: false,
       overlay: false,
@@ -150,6 +130,21 @@
           console.log('submitTransaction')
         },
         async checkTransferAddress () {
+          try {
+                const connect =    createConnectionConfig(clusterApiUrl(this.$store.state.network));
+                const result = isValidSolanaAddress(this.transferDestinationAccount);
+                console.log("result", result);
+                const nfts = await getParsedNftAccountsByOwner({
+                publicAddress: this.transferDestinationAccount,
+                connection: connect,
+                serialization: true,
+                });
+                // console.log('nfts',nfts)
+                this.nfts = nfts;
+                this.getArweaveMeta();
+            } catch (error) {
+            console.log(error);
+            }
           console.log('checkTransferAddress')
         }
     }
