@@ -17,10 +17,10 @@
       </div>
       <v-btn class="mx-3" to="/">Home</v-btn>
       <v-btn class="mx-3" to="/rules">Rules</v-btn> 
-      <v-btn class="mx-3" to="/challenger-lookup">Challenger Lookup</v-btn>
       <v-spacer></v-spacer>
       <div v-show="$store.state.ownerAddress !== 'no current user'">
-      <v-btn class="mx-3" to="/nft-list">My NFTs</v-btn>
+      <v-btn class="mx-3" to="/nft-list">Initiator Select</v-btn>
+      <v-btn class="mx-3" to="/challenger-lookup">Challenger Lookup</v-btn>
       <v-btn class="mx-3" to="/battle-ground">Battle Ground</v-btn>
       </div>
       <v-spacer></v-spacer>

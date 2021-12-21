@@ -18,10 +18,10 @@
             <v-card class="ma-1 mt-3" dark>
                 <v-card-text>
                     <h3>Name: {{this.$store.state.initiatorNFT.name}}</h3>
-                    <p>Age: </p>
-                    <p>Game Points: </p>
-                    <p>Magic Points: </p>
-                    <p>Drabs: </p>
+                    <p>Age: {{this.$store.state.initiatorNFT.age}}</p>
+                    <p>Game Points: 0</p>
+                    <p>Magic Points: 0</p>
+                    <p>Drabs: 0</p>
                     <p>Description: {{this.$store.state.initiatorNFT.description}}</p>
                 </v-card-text>
             </v-card>    
@@ -48,10 +48,10 @@
             <v-card class="ma-1 mt-3" light>
                 <v-card-text>
                     <h3>Name: {{this.$store.state.challengerNFT.name}}</h3>
-                    <p>Age: </p>
-                    <p>Game Points: </p>
-                    <p>Magic Points: </p>
-                    <p>Drabs: </p>
+                    <p>Age: {{this.$store.state.challengerNFT.age}}</p>
+                    <p>Game Points: 0</p>
+                    <p>Magic Points: 0</p>
+                    <p>Drabs: 0</p>
                     <p>Description: {{this.$store.state.challengerNFT.description}}</p>
                 </v-card-text>
             </v-card>    

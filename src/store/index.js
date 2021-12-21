@@ -13,16 +13,18 @@ export default new Vuex.Store({
       'mainnet-beta',
     ],
     initiatorNFT: {
-      name: '',
+      name: 'Initiator',
       mint: 'Please Choose Initiator NFT',
       image: 'https://gateway.pinata.cloud/ipfs/QmW5JjSHfXvrdHxAYoeKK3hCvaGSYWBDJ2Pz5XJPovfUtc',
-      description: ''
+      description: 'The Person Initiating the Match',
+      age: 'unknown'
     },
     challengerNFT: {
-      name: '',
+      name: 'Challenger',
       mint: 'Please Elect Challenger',
       image: 'https://gateway.pinata.cloud/ipfs/QmW5JjSHfXvrdHxAYoeKK3hCvaGSYWBDJ2Pz5XJPovfUtc',
-      description: ''
+      description: 'The Challenger to the Match',
+      age: 'unknown'
     },
     initiatorNFTaddress: 'Please Choose Initiator NFT',
     challengerNFTaddress: 'Please Elect Challenger'
