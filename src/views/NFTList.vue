@@ -157,6 +157,7 @@
           };
 
           console.log('add Initiator', this.$store.state.initiatorNFT)
+          this.$router.push("/challenger-lookup")
         },
         async checkTransferAddress () {
           console.log('checkTransferAddress')

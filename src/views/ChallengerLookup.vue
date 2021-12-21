@@ -193,6 +193,7 @@
           };
 
           console.log('add Challenger', this.$store.state.challengerNFT)
+          this.$router.push("/battle-ground")
         },
     }
   }
