@@ -17,6 +17,7 @@
       </div>
       <v-btn class="mx-3" to="/">Home</v-btn>
       <v-btn class="mx-3" to="/rules">Rules</v-btn> 
+      <v-btn class="mx-3" to="/challenger-lookup">Challenger Lookup</v-btn>
       <v-spacer></v-spacer>
       <div v-show="$store.state.ownerAddress !== 'no current user'">
       <v-btn class="mx-3" to="/nft-list">My NFTs</v-btn>
@@ -51,6 +52,8 @@
         ></v-select>
       <v-spacer></v-spacer>
       <p>version: <strong>the-pre-game</strong></p>
+      <v-spacer></v-spacer>
+      <a href="https://github.com/aimingqi/the-game" target="_blank"><v-icon x-large>mdi-github</v-icon></a> 
     </v-footer>
   </v-app>
 </template>

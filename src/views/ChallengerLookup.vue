@@ -1,16 +1,15 @@
 <template>
     <v-container>
         <v-row>
-            <v-col>
-                <v-card width="50%">
+            <v-col cols="12" sm="6">
+                <v-card>
                     <v-card-text>
-                        <h2 v-show="!validTransferAddress">Input Valid Solana Address</h2>
+                        <h2 v-show="!validSolanaAddress">Input Valid Solana Address</h2>
                     </v-card-text>
                     <v-card-text>
-                        <h2 class="green--text" v-show="validTransferAddress"><v-icon>mdi-check</v-icon> Valid Solana Address</h2>
                         <v-col cols="12">
                         <v-text-field 
-                            v-model="transferDestinationAccount" 
+                            v-model="solanaLookupAccount" 
                             :rules="[rules.required, rules.counter]"
                             width="100%"
                             auto-grow
@@ -31,26 +30,38 @@
                         <v-btn
                             class="white--text"
                             color="purple"
-                            v-show="validTransferAddress"
-                            @click="submitTransaction"
+                            v-show="validSolanaAddress"
+                            @click="reset"
                             >
-                            Submit
+                            Reset
                         </v-btn>
                     
                         <v-btn
                             class="white--text"
                             color="red"
-                            @click="checkTransferAddress"
-                            v-show="!validTransferAddress"
+                            @click="checkSolanaAddress"
+                            v-show="!validSolanaAddress"
                             >
                             Check Addr
                         </v-btn>
                     </v-card-actions>
                 </v-card>
             </v-col>
+            <v-col cols="12" sm="6">
+                <v-card>
+                    <v-card-text>
+                        <h2 v-show="!validSolanaAddress">Account Information:</h2>
+                    </v-card-text>
+                    <v-card-text>
+                        <h2 class="green--text" v-show="validSolanaAddress"><v-icon>mdi-check</v-icon> Valid Solana Address: {{solanaLookupAccount}}</h2>
+                        <v-col cols="12">
+                        </v-col>
+                    </v-card-text>
+                   
+                </v-card>
+            </v-col>
         </v-row>
-        <v-row>
-            <v-col>
+        <v-row dense>
                 <v-card v-for="nft in nftmetadata" :key="nft.index" class="mx-auto my-12" max-width="400" dark>
                     <v-card-title>{{nft.nft.data.name}}</v-card-title>
                     <v-card-text>
@@ -78,7 +89,6 @@
                     </v-card>
                 </v-expand-transition>    
                 </v-card>
-            </v-col>
         </v-row>
     </v-container>      
         
@@ -95,11 +105,11 @@
 
   export default {
     data: () => ({
-      validTransferAddress: false,
+      validSolanaAddress: false,
       overlay: false,
       zIndex: 0,
       reveal: false,
-      transferDestinationAccount: '',
+      solanaLookupAccount: '',
       ownerAddress: '',
       nfts: {},
       nftmetadata: [],
@@ -117,18 +127,24 @@
         this.getAllNftData();
     },
     methods: {
-        async checkTransferAddress () {
+        reset () {
+            this.solanaLookupAccount = '';
+            this.nfts = {};
+            this.nftmetadata = [];
+            this.validSolanaAddress = false;
+        },
+        async checkSolanaAddress () {
             try {
-                const result = isValidSolanaAddress(this.transferDestinationAccount);
+                const result = isValidSolanaAddress(this.solanaLookupAccount);
                 console.log("result", result);
                 if (result === true) {
                     this.getAllNftData();
-                    this.validTransferAddress = true;
+                    this.validSolanaAddress = true;
                 } else {
-                    this.validTransferAddress = false;
+                    this.validSolanaAddress = false;
                 }
             } catch (error) {
-                this.validTransferAddress = false
+                this.validSolanaAddress = false
                 console.log(error);
             }
           console.log('checkTransferAddress')
@@ -136,7 +152,7 @@
         async getAllNftData () {
             try {
                 const connect =    createConnectionConfig(clusterApiUrl(this.$store.state.network));
-                let ownerToken = this.transferDestinationAccount;
+                let ownerToken = this.solanaLookupAccount;
                 const result = isValidSolanaAddress(ownerToken);
                 console.log("result", result);
                 const nfts = await getParsedNftAccountsByOwner({
@@ -177,11 +193,7 @@
                 return provider;
                 }
             }
-        },
-        submitTransaction () {
-            this.validTransferAddress = false
-          console.log('submitTransaction')
-        },
+        }
     }
   }
 </script>
