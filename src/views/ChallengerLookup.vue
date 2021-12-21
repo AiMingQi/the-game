@@ -2,9 +2,9 @@
     <v-container>
         <v-row>
             <v-col cols="12" sm="6">
-                <v-card>
+                <v-card v-show="!validSolanaAddress">
                     <v-card-text>
-                        <h2 v-show="!validSolanaAddress">Input Valid Solana Address</h2>
+                        <h2 >Input Valid Solana Address</h2>
                     </v-card-text>
                     <v-card-text>
                         <v-col cols="12">
@@ -27,14 +27,6 @@
                             Cancel
                         </v-btn> -->
                         <v-spacer></v-spacer>
-                        <v-btn
-                            class="white--text"
-                            color="purple"
-                            v-show="validSolanaAddress"
-                            @click="reset"
-                            >
-                            Reset
-                        </v-btn>
                     
                         <v-btn
                             class="white--text"
@@ -46,47 +38,43 @@
                         </v-btn>
                     </v-card-actions>
                 </v-card>
-            </v-col>
-            <v-col cols="12" sm="6">
-                <v-card>
+                <v-card v-show="validSolanaAddress">
                     <v-card-text>
                         <h2 v-show="!validSolanaAddress">Account Information:</h2>
                     </v-card-text>
                     <v-card-text>
-                        <h2 class="green--text" v-show="validSolanaAddress"><v-icon>mdi-check</v-icon> Valid Solana Address: {{solanaLookupAccount}}</h2>
-                        <v-col cols="12">
-                        </v-col>
+                        <h2 class="green--text float-left" ><v-icon>mdi-check</v-icon> Valid Solana Address</h2>
+                        {{solanaLookupAccount}}  <v-btn class="white--text ml-2" color="purple" v-show="validSolanaAddress" @click="reset"  >Reset</v-btn>
                     </v-card-text>
                    
                 </v-card>
             </v-col>
         </v-row>
         <v-row dense>
-                <v-card v-for="nft in nftmetadata" :key="nft.index" class="mx-auto my-12" max-width="400" dark>
+                <v-card v-for="nft in nftmetadata" :key="nft.index" class="mx-auto my-12" width="420px" dark>
                     <v-card-title>{{nft.nft.data.name}}</v-card-title>
                     <v-card-text>
                     <v-img :src="nft.res.data.image"></v-img>
                         </v-card-text>
                     <v-card-actions>
                     <v-spacer></v-spacer>  
-                    <v-btn color="#c00000" dark>Battle</v-btn>    
+                    <v-btn color="#c00000" dark @click="reveal = !reveal"><v-icon>{{ reveal ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon></v-btn>    
                     
                     </v-card-actions>
                     <v-expand-transition>
-                    <v-card
-                    v-if="reveal"
-                    class="transition-fast-in-fast-out v-card--reveal"
-                    style="height: 100%;"
-                    >
-                    <v-card-text class="pb-0">
-                        Token Address: {{nft.nft.mint}} <br>
-                        Contract Address: {{nft.nft.updateAuthority}} <br>
-                        <br>
-                        Description: {{nft.res.data.description}} <br>
-                    </v-card-text>
-                    <v-card-actions class="pt-0">
-                    </v-card-actions>
-                    </v-card>
+                        <v-card
+                        v-show="reveal"
+                        class="transition-fast-in-fast-out v-card--reveal"
+                        >
+                        <v-card-text class="pb-0">
+                            Token Address: {{nft.nft.mint}} <br>
+                            Contract Address: {{nft.nft.updateAuthority}} <br>
+                            <br>
+                            Description: {{nft.res.data.description}} <br>
+                        </v-card-text>
+                        <v-card-actions class="pt-0">
+                        </v-card-actions>
+                        </v-card>
                 </v-expand-transition>    
                 </v-card>
         </v-row>
