@@ -2,9 +2,9 @@
     <v-container>
         <v-row>
             <v-col>
-                <v-card width="100%">
+                <v-card width="50%">
                     <v-card-text>
-                        <h2 v-show="!validTransferAddress">Input Valid Solana Destination Address</h2>
+                        <h2 v-show="!validTransferAddress">Input Valid Solana Address</h2>
                     </v-card-text>
                     <v-card-text>
                         <h2 class="green--text" v-show="validTransferAddress"><v-icon>mdi-check</v-icon> Valid Solana Address</h2>
@@ -49,6 +49,37 @@
                 </v-card>
             </v-col>
         </v-row>
+        <v-row>
+            <v-col>
+                <v-card v-for="nft in nftmetadata" :key="nft.index" class="mx-auto my-12" max-width="400" dark>
+                    <v-card-title>{{nft.nft.data.name}}</v-card-title>
+                    <v-card-text>
+                    <v-img :src="nft.res.data.image"></v-img>
+                        </v-card-text>
+                    <v-card-actions>
+                    <v-spacer></v-spacer>  
+                    <v-btn color="#c00000" dark>Battle</v-btn>    
+                    
+                    </v-card-actions>
+                    <v-expand-transition>
+                    <v-card
+                    v-if="reveal"
+                    class="transition-fast-in-fast-out v-card--reveal"
+                    style="height: 100%;"
+                    >
+                    <v-card-text class="pb-0">
+                        Token Address: {{nft.nft.mint}} <br>
+                        Contract Address: {{nft.nft.updateAuthority}} <br>
+                        <br>
+                        Description: {{nft.res.data.description}} <br>
+                    </v-card-text>
+                    <v-card-actions class="pt-0">
+                    </v-card-actions>
+                    </v-card>
+                </v-expand-transition>    
+                </v-card>
+            </v-col>
+        </v-row>
     </v-container>      
         
      
@@ -83,13 +114,29 @@
         console.log(this.$store.state.ownerAddress);
     },
     created (){
-       this.getAllNftData();
+        this.getAllNftData();
     },
     methods: {
+        async checkTransferAddress () {
+            try {
+                const result = isValidSolanaAddress(this.transferDestinationAccount);
+                console.log("result", result);
+                if (result === true) {
+                    this.getAllNftData();
+                    this.validTransferAddress = true;
+                } else {
+                    this.validTransferAddress = false;
+                }
+            } catch (error) {
+                this.validTransferAddress = false
+                console.log(error);
+            }
+          console.log('checkTransferAddress')
+        },
         async getAllNftData () {
             try {
                 const connect =    createConnectionConfig(clusterApiUrl(this.$store.state.network));
-                let ownerToken = this.$store.state.ownerAddress;
+                let ownerToken = this.transferDestinationAccount;
                 const result = isValidSolanaAddress(ownerToken);
                 console.log("result", result);
                 const nfts = await getParsedNftAccountsByOwner({
@@ -101,7 +148,7 @@
                 this.nfts = nfts;
                 this.getArweaveMeta();
             } catch (error) {
-            console.log(error);
+                console.log(error);
             }
         },
         async getArweaveMeta () {
@@ -135,21 +182,6 @@
             this.validTransferAddress = false
           console.log('submitTransaction')
         },
-        async checkTransferAddress () {
-            try {
-                const result = isValidSolanaAddress(this.transferDestinationAccount);
-                console.log("result", result);
-                if (result === true) {
-                    this.validTransferAddress = true
-                } else {
-                    this.validTransferAddress = false
-                }
-            } catch (error) {
-                this.validTransferAddress = false
-                console.log(error);
-            }
-          console.log('checkTransferAddress')
-        }
     }
   }
 </script>
