@@ -57,8 +57,10 @@
                     <v-img :src="nft.res.data.image"></v-img>
                         </v-card-text>
                     <v-card-actions>
+                    <v-btn color="blue" dark @click="reveal = !reveal"><v-icon>{{ reveal ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon></v-btn>    
                     <v-spacer></v-spacer>  
-                    <v-btn color="#c00000" dark @click="reveal = !reveal"><v-icon>{{ reveal ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon></v-btn>    
+
+                    <v-btn color="#c00000" @click="addChallengerNFT(nft.nft.mint,nft.nft.data.name,nft.res.data.image,nft.res.data.description)">Challenge</v-btn>
                     
                     </v-card-actions>
                     <v-expand-transition>
@@ -181,7 +183,17 @@
                 return provider;
                 }
             }
-        }
+        },
+        addChallengerNFT (mint,name,image,description) {
+          this.$store.state.challengerNFT = {
+            name: name,
+            mint: mint,
+            image: image,
+            description: description
+          };
+
+          console.log('add Challenger', this.$store.state.challengerNFT)
+        },
     }
   }
 </script>

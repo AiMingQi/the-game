@@ -11,7 +11,21 @@ export default new Vuex.Store({
       'devnet',
       'testnet',
       'mainnet-beta',
-    ]
+    ],
+    initiatorNFT: {
+      name: '',
+      mint: 'Please Choose Initiator NFT',
+      image: 'https://gateway.pinata.cloud/ipfs/QmW5JjSHfXvrdHxAYoeKK3hCvaGSYWBDJ2Pz5XJPovfUtc',
+      description: ''
+    },
+    challengerNFT: {
+      name: '',
+      mint: 'Please Elect Challenger',
+      image: 'https://gateway.pinata.cloud/ipfs/QmW5JjSHfXvrdHxAYoeKK3hCvaGSYWBDJ2Pz5XJPovfUtc',
+      description: ''
+    },
+    initiatorNFTaddress: 'Please Choose Initiator NFT',
+    challengerNFTaddress: 'Please Elect Challenger'
   },
   mutations: {
     updateNetwork (state, network) {

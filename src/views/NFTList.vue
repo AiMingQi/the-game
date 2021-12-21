@@ -8,10 +8,13 @@
         <h2 class="headline font-weight-bold mb-6">
           Your Playable NFTs: Feature Under Construction !!!
         </h2>
+        <h3>
+          {{this.$store.state.initiatorNFT.name}}
+        </h3>
         <v-btn color="blue" dark @click="reveal = true" v-show="!reveal">See More</v-btn>  
         <v-btn color="blue" dark @click="reveal = false" v-show="reveal">See Less</v-btn>  
         <v-row class="text-left">
-         <v-card v-for="nft in nftmetadata" :key="nft.index" class="mx-auto my-12" max-width="400" dark>
+         <v-card v-for="nft in nftmetadata" :key="nft.index" class="mx-auto my-12" max-width="420" dark>
             <v-card-title>{{nft.nft.data.name}}</v-card-title>
             <v-card-text>
             <v-img :src="nft.res.data.image"></v-img>
@@ -19,14 +22,13 @@
             <v-card-actions>
               <v-btn color="purple" dark @click="overlay = !overlay">Transfer NFT</v-btn>  
               <v-spacer></v-spacer>  
-              <v-btn color="#c00000" dark>Battle</v-btn>    
+              <v-btn color="#c00000" dark @click="addInitiatorNFT(nft.nft.mint,nft.nft.data.name,nft.res.data.image,nft.res.data.description)">Initiate Battle</v-btn>    
             
             </v-card-actions>
             <v-expand-transition>
             <v-card
               v-if="reveal"
               class="transition-fast-in-fast-out v-card--reveal"
-              style="height: 100%;"
             >
               <v-card-text class="pb-0">
                 Token Address: {{nft.nft.mint}} <br>
@@ -146,8 +148,15 @@
                 }
             }
         },
-        submitTransaction () {
-          console.log('submitTransaction')
+        addInitiatorNFT (mint,name,image,description) {
+          this.$store.state.initiatorNFT = {
+            name: name,
+            mint: mint,
+            image: image,
+            description: description
+          };
+
+          console.log('add Initiator', this.$store.state.initiatorNFT)
         },
         async checkTransferAddress () {
           console.log('checkTransferAddress')

@@ -9,19 +9,20 @@
           Battle Ground: Feature Under Construction !!!
         </h2>
 
-        <v-row justify="left" class="text-left">
+        <v-row class="text-left">
          <v-card class="mx-auto my-6" max-width="35%" light>
-            <v-card-title>Intiator</v-card-title>
+            <v-card-title>Intiator: {{this.$store.state.initiatorNFT.name}}</v-card-title>
+            <v-card-subtitle>{{this.$store.state.initiatorNFT.mint}} </v-card-subtitle>
             <v-card-text>
-            <v-img src="../assets/game-baby.png"></v-img>
+            <v-img :src="this.$store.state.initiatorNFT.image"></v-img>
             <v-card class="ma-1 mt-3" dark>
                 <v-card-text>
-                    <h3>Name:</h3>
+                    <h3>Name: {{this.$store.state.initiatorNFT.name}}</h3>
                     <p>Age: </p>
                     <p>Game Points: </p>
                     <p>Magic Points: </p>
                     <p>Drabs: </p>
-                    <p>Metadata: </p>
+                    <p>Description: {{this.$store.state.initiatorNFT.description}}</p>
                 </v-card-text>
             </v-card>    
                 </v-card-text>
@@ -40,17 +41,18 @@
 
          </v-card>
          <v-card class="mx-auto my-6" max-width="35%" dark>
-            <v-card-title>Challenger</v-card-title>
+            <v-card-title>Challenger: {{this.$store.state.challengerNFT.name}}</v-card-title>
+            <v-card-subtitle>{{this.$store.state.challengerNFT.mint}} </v-card-subtitle>
             <v-card-text>
-            <v-img src="../assets/game-baby.png"></v-img>
+            <v-img :src="this.$store.state.challengerNFT.image"></v-img>
             <v-card class="ma-1 mt-3" light>
                 <v-card-text>
-                    <h3>Name:</h3>
+                    <h3>Name: {{this.$store.state.challengerNFT.name}}</h3>
                     <p>Age: </p>
                     <p>Game Points: </p>
                     <p>Magic Points: </p>
                     <p>Drabs: </p>
-                    <p>Metadata: </p>
+                    <p>Description: {{this.$store.state.challengerNFT.description}}</p>
                 </v-card-text>
             </v-card>    
             </v-card-text>
